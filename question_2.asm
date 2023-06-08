@@ -6,12 +6,13 @@ buffer db 16
 
 _start:
     xor ax, ax
+    xor dx, dx
     mov ds, ax
     mov es, ax
 
     call getchar
 
-    mov si, ax
+    mov si, dx
 
     call print_str
 
@@ -19,10 +20,10 @@ _start:
 
     call print_str
 
-    jmp $
+    jmp done
 
 getchar:
-    mov ah, 0x00
+    mov dx, 0x00
     int 16h
     ret
 
