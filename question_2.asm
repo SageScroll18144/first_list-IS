@@ -22,10 +22,15 @@ _start:
     xor ax, ax
 
     call gets
+    call endl
+
+    ;call getchar
+    ;call endl
+
     ;call putchar
     ; mov si, ax
 
-    ; call print_str
+    ;call print_str
     
     mov si, hello
 
@@ -35,35 +40,42 @@ _start:
 
 getchar:
     mov ah, 0x0
-    ;mov dx, 0x0
     int 16h
     ret
 
 gets:
+    xor ax, ax
+
     call getchar
     call putchar
     
-    cmp al, 65
+    cmp al, 0x0d
     je .done
 
-    ;push ax
+    push ax
     jmp gets
 
     .done:
         ret
     
-
 putchar:
-  mov ah, 0x0e
-  int 10h
-  ret
+    mov ah, 0x0e
+    int 10h
+    ret
+
+endl:
+    mov ax, 0x0a
+    call putchar
+    mov ax, 0x0d
+    call putchar
+    ret
 
 print_str:
     lodsb ; carrega uma letra em si
     cmp al, 0
     je .done
 
-    mov ah, 0eh
+    mov ah, 0x0e
     mov bh, 0
     mov bl, 0xf
     int 10h
@@ -72,6 +84,7 @@ print_str:
 
     .done:
         ret
+
 done:
     jmp $
 
