@@ -21,8 +21,8 @@ _start:
 
     xor ax, ax
 
-    call getchar
-    call putchar
+    call gets
+    ;call putchar
     ; mov si, ax
 
     ; call print_str
@@ -34,10 +34,24 @@ _start:
     jmp done
 
 getchar:
-    mov ah, 0x00
+    mov ah, 0x0
     ;mov dx, 0x0
     int 16h
     ret
+
+gets:
+    call getchar
+    call putchar
+    
+    cmp al, 65
+    je .done
+
+    ;push ax
+    jmp gets
+
+    .done:
+        ret
+    
 
 putchar:
   mov ah, 0x0e
