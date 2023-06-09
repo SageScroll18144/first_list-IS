@@ -23,7 +23,8 @@ _start:
     call gets
 
     xor ax, ax
-    call gets
+    call getchar
+    call endl
     
     mov si, hello
 
@@ -34,13 +35,13 @@ _start:
 getchar:
     mov ah, 0x0
     int 16h
+    call putchar
     ret
 
 gets:
     xor ax, ax
 
     call getchar
-    call putchar
     
     cmp al, 0x0d
     je .done
@@ -60,8 +61,6 @@ putchar:
 endl:
     mov ax, 0x0a
     call putchar
-    ; mov ax, 0x0d
-    ; call putchar
     ret
 
 print_str:
