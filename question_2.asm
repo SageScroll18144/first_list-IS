@@ -20,17 +20,10 @@ _start:
     int 10h
 
     xor ax, ax
-
     call gets
-    call endl
 
-    ;call getchar
-    ;call endl
-
-    ;call putchar
-    ; mov si, ax
-
-    ;call print_str
+    xor ax, ax
+    call gets
     
     mov si, hello
 
@@ -52,10 +45,11 @@ gets:
     cmp al, 0x0d
     je .done
 
-    push ax
+    ;push ax
     jmp gets
 
     .done:
+        call endl
         ret
     
 putchar:
@@ -66,8 +60,8 @@ putchar:
 endl:
     mov ax, 0x0a
     call putchar
-    mov ax, 0x0d
-    call putchar
+    ; mov ax, 0x0d
+    ; call putchar
     ret
 
 print_str:
