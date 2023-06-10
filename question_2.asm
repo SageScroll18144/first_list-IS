@@ -19,7 +19,6 @@ _start:
     mov bh, 0
     mov bl, 1h
     int 10h
-
     
     call getstring
     call endl
