@@ -12,6 +12,7 @@ _start:
     mov es, ax
     mov si, ax
 
+    ;tela
     mov ah, 0
     mov bh, 12h
     int 10h
@@ -21,18 +22,21 @@ _start:
     mov bl, 1h
     int 10h
     
+    ;input da string
     mov dx, '0'
-
     xor ax, ax
     call gets
 
+    ;input do char
     xor ax, ax
     call getchar
     call endl
     
+    ;counter numerador
     xor si, si
     ;call check
-
+    
+    ;numerador
     mov ax, '0'
     add ax, 0
     call putchar
@@ -40,9 +44,8 @@ _start:
     mov al, '/'
     call putchar
 
-    ;mov ax, '0'
+    ;denominador
     mov ax, dx
-    ;add ax, si
     call putchar
 
     jmp done
