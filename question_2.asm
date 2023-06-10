@@ -1,14 +1,16 @@
 org 0x7c00
 jmp _start
 
-hello db "funciona por favor", 0
-buffer db 16
+denominador db 0
+numerador db 0
 
 _start:
     xor ax, ax
     xor dx, dx
     mov ds, ax
     mov es, ax
+    mov si, ax
+    mov cx, ax
 
     mov ah, 0
     mov bh, 12h
@@ -25,10 +27,22 @@ _start:
     xor ax, ax
     call getchar
     call endl
-    
-    mov si, hello
 
-    call print_str
+    mov dl, al
+    
+    xor si, si
+    call counter
+
+    mov al, '0'
+    add al, numerador
+    call putchar
+
+    mov al, '/'
+    call putchar
+
+    mov al, '0'
+    add al, denominador
+    call putchar
 
     jmp done
 
@@ -39,14 +53,14 @@ getchar:
     ret
 
 gets:
-    xor ax, ax
-
     call getchar
     
     cmp al, 0x0d
     je .done
+    
+    stosb
+    inc si
 
-    ;push ax
     jmp gets
 
     .done:
@@ -61,21 +75,41 @@ putchar:
 endl:
     mov ax, 0x0a
     call putchar
+    mov ax, 0x0d
+    call putchar
     ret
 
-print_str:
-    lodsb ; carrega uma letra em si
+counter:
+    lodsb
+    
     cmp al, 0
     je .done
 
-    mov ah, 0x0e
-    mov bh, 0
-    mov bl, 0xf
-    int 10h
+    cmp al, dl ; 'A' depois muda para o registrador
+    je .cnt_char
 
-    jmp print_str
+    inc byte [denominador]
+
+    jmp counter
 
     .done:
+        ret
+
+    .cnt_char:
+        inc byte [numerador]
+        ret
+
+check:
+    lodsb
+    cmp al, 0
+    je .done
+
+    call putchar
+
+    jmp check
+
+    .done:
+        call endl
         ret
 
 done:
