@@ -7,10 +7,10 @@ numerador db 0
 _start:
     xor ax, ax
     xor dx, dx
+    xor cx, cx
     mov ds, ax
     mov es, ax
     mov si, ax
-    mov cx, ax
 
     mov ah, 0
     mov bh, 12h
@@ -20,6 +20,8 @@ _start:
     mov bh, 0
     mov bl, 1h
     int 10h
+    
+    mov dx, '0'
 
     xor ax, ax
     call gets
@@ -27,21 +29,20 @@ _start:
     xor ax, ax
     call getchar
     call endl
-
-    mov dl, al
     
     xor si, si
-    call counter
+    ;call check
 
-    mov al, '0'
-    add al, numerador
+    mov ax, '0'
+    add ax, 0
     call putchar
 
     mov al, '/'
     call putchar
 
-    mov al, '0'
-    add al, denominador
+    ;mov ax, '0'
+    mov ax, dx
+    ;add ax, si
     call putchar
 
     jmp done
@@ -57,6 +58,8 @@ gets:
     
     cmp al, 0x0d
     je .done
+    
+    inc dx
     
     stosb
     inc si
@@ -85,10 +88,10 @@ counter:
     cmp al, 0
     je .done
 
-    cmp al, dl ; 'A' depois muda para o registrador
+    cmp al, 's' ; 'A' depois muda para o registrador
     je .cnt_char
 
-    inc byte [denominador]
+    inc dx
 
     jmp counter
 
@@ -96,7 +99,7 @@ counter:
         ret
 
     .cnt_char:
-        inc byte [numerador]
+        inc cx
         ret
 
 check:
