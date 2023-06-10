@@ -9,22 +9,39 @@ _start:
     xor bx, bx
     xor cx, cx 
     xor dx, dx 
+
+    ;tela
+    mov ah, 0
+    mov bh, 12h
+    int 10h
+
+    mov ah, 0xb
+    mov bh, 0
+    mov bl, 1h
+    int 10h
+
     
     call getstring
     call endl
+
     call letter
     call endl 
+
     xor si, si
-    call print_count2
+    call numerator
+
     call bar
-    call print_count
+
+    call denominator
     call done
     
 getstring:
     call getchar
     call putchar
+
     cmp al, 0x0d
     je .done
+    
     inc cx
     stosb
     
@@ -36,35 +53,38 @@ getstring:
 endl: 
     mov ax, 0x0a
     call putchar
+    
     mov ax, 0x0d
     call putchar
+    
     ret
         
 letter:
     call getchar
     call putchar
+    
     mov bl, al
     ret
         
-print_count:
+denominator:
     mov al, cl
     mov ah, 0x0e
     add al, '0'
     int 10h
     ret
     
-print_count2:
+numerator:
     lodsb
     cmp al, bl
     je .count 
     cmp al, 0
     je .print
     
-    jmp print_count2
+    jmp numerator
     
     .count:
         inc dx
-        jmp print_count2
+        jmp numerator
     
     .print:
         mov al, dl
