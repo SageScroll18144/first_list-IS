@@ -1,125 +1,101 @@
 org 0x7c00
 jmp _start
 
-denominador db 0
-numerador db 0
+buffer times 64 db 0
 
 _start:
-    xor ax, ax
-    xor dx, dx
-    xor cx, cx
-    mov ds, ax
-    mov es, ax
-    mov si, ax
-
-    ;tela
-    mov ah, 0
-    mov bh, 12h
-    int 10h
-
-    mov ah, 0xb
-    mov bh, 0
-    mov bl, 1h
-    int 10h
+    mov si, buffer
+    xor ax, ax 
+    xor bx, bx
+    xor cx, cx 
+    xor dx, dx 
     
-    ;input da string
-    mov dx, '0'
-    xor ax, ax
-    call gets
-
-    ;input do char
-    xor ax, ax
-    call getchar
+    call getstring
     call endl
-    
-    ;counter numerador
+    call letter
+    call endl 
     xor si, si
-    ;call check
+    call print_count2
+    call bar
+    call print_count
+    call done
     
-    ;numerador
-    mov ax, '0'
-    add ax, 0
-    call putchar
-
-    mov al, '/'
-    call putchar
-
-    ;denominador
-    mov ax, dx
-    call putchar
-
-    jmp done
-
-getchar:
-    mov ah, 0x0
-    int 16h
-    call putchar
-    ret
-
-gets:
+getstring:
     call getchar
-    
+    call putchar
     cmp al, 0x0d
     je .done
-    
-    inc dx
-    
+    inc cx
     stosb
-    inc si
-
-    jmp gets
-
-    .done:
-        call endl
-        ret
     
-putchar:
-    mov ah, 0x0e
-    int 10h
-    ret
-
-endl:
+    jmp getstring
+    
+    .done:
+        ret
+            
+endl: 
     mov ax, 0x0a
     call putchar
     mov ax, 0x0d
     call putchar
     ret
-
-counter:
-    lodsb
-    
-    cmp al, 0
-    je .done
-
-    cmp al, 's' ; 'A' depois muda para o registrador
-    je .cnt_char
-
-    inc dx
-
-    jmp counter
-
-    .done:
-        ret
-
-    .cnt_char:
-        inc cx
-        ret
-
-check:
-    lodsb
-    cmp al, 0
-    je .done
-
+        
+letter:
+    call getchar
     call putchar
-
-    jmp check
-
-    .done:
-        call endl
+    mov bl, al
+    ret
+        
+print_count:
+    mov al, cl
+    mov ah, 0x0e
+    add al, '0'
+    int 10h
+    ret
+    
+print_count2:
+    lodsb
+    cmp al, bl
+    je .count 
+    cmp al, 0
+    je .print
+    
+    jmp print_count2
+    
+    .count:
+        inc dx
+        jmp print_count2
+    
+    .print:
+        mov al, dl
+        mov ah, 0x0e
+        add al, '0'
+        int 10h
         ret
-
+        
+bar:
+    mov ah, 0x0e
+    mov al, '/'
+    int 10h
+    ret
+    
+putchar:
+    mov ah, 0x0e
+    int 10h 
+    ret
+    
+getchar:
+    mov ah, 0x00 
+    int 16h
+    ret
+    
 done:
     jmp $
-
+    
 times 510 - ($ - $$) db 0
 dw 0xaa55
+    
+    
+    
+
+
