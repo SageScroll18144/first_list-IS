@@ -101,9 +101,7 @@ solve:
     lodsb
 
     ;trocar ax por bx
-    ; mov dx, bx
-    ; mov bx, ax
-    ; mov ax, dx
+    xchg bx, ax
 
     idiv bx
 
