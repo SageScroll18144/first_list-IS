@@ -5,7 +5,7 @@ flag db 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 7, 0, 0, 
 
 _start:
 	xor ax, ax
-    	xor cx, cx
+    xor cx, cx
    	xor dx, dx
 	mov si, flag
 	
