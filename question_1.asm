@@ -5,17 +5,17 @@ flag db 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 7, 0, 0, 
 
 _start:
 	xor ax, ax
-    xor cx, cx
-    xor dx, dx
+    	xor cx, cx
+   	xor dx, dx
 	mov si, flag
 	
 	mov ah, 0
 	mov al, 13h
 	int 10h
-	
+
 	call load_pixel
 
-    jmp done
+	jmp done
 	
 load_pixel:
 	lodsb
