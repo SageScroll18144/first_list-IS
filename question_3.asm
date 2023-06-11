@@ -77,62 +77,71 @@ solve:
     xor si, si
     
     lodsb
-    mov bx, ax
+    mov cx, ax
     
     lodsb
-    imul bx, ax
+    imul cx, ax
 
     lodsb
-    mov cx, ax
+    mov bx, ax
 
     lodsb
-    imul cx, bx
+    imul bx, bx
 
-    add bx, cx
+    add cx, bx
 
     ;até aqui foram os dois primeiros literais
 
     xor si, si
-    
-    lodsb
-    mov cx, ax
-    
-    lodsb
-    lodsb
-    idiv cx, ax
 
-    sub bx, cx
+    lodsb
+    mov bx, ax
 
-    ;ate aqui foi o terceiro literal
+    lodsb
+    lodsb
+
+    ;trocar ax por bx
+    ; mov dx, bx
+    ; mov bx, ax
+    ; mov ax, dx
+
+    idiv bx
+
+    sub cx, ax
+    ;até o terceiro literal
 
     xor si, si
+
+    lodsb
+    lodsb
+
+    mov bx, ax
+
+    lodsb
+    lodsb
+
+    idiv bx
+
+    add cx, bx
+
+    and cx, 1
     
-    lodsb
-    lodsb
-    mov cx, ax
-
-    lodsb
-    lodsb
-    idiv ax, cx
-
-    add bx, ax
-
-    mov ax, bx
-    and ax, 1
-
-    cmp ax, 1
+    cmp cx, 1
     je .odd
 
-    mov si, even
-    call print_str
-
-    ret
+    cmp cx, 1
+    jne .even
+    
 
     .odd:
         mov si, odd
         call print_str
         ret
 
+    .even:
+        mov si, even
+        call print_str
+        ret
 
 print_str:
     lodsb ; carrega uma letra em si
