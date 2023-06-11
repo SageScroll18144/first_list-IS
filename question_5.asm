@@ -1,27 +1,36 @@
 org 0x7c00
 jmp 0x0000:_start
 
+ans db "Como eh facil trocar a cor", 0
+
 _start:
     xor ax, ax
     xor cx, cx
     xor si, si
+    mov ds, ax
+    
+    mov ah, 0
+    mov al, 12h
+    int 10h
 
+    xor ax, ax
+    xor cx, cx
+    xor si, si
+
+
+    mov bl, 0xf
     call getinput
     call endl
 
     call solve
-
-    ;tela
-    mov ah, 0
-    mov bh, 13h
-    int 10h
-
+    
+    xor dx, dx
     mov dx, ax
+    add cx, '0'
 
-    mov ah, dh
-    mov bh, 0
-    mov bl, 1h
-    int 10h
+    ;texto
+    mov si, ans
+    call print_str
 
     jmp done
 
@@ -68,14 +77,32 @@ solve:
     cmp cx, 2
     jne .not_dez
 
+    cmp cx, 2
+    je .dez
+
     .not_dez:
         xor ax, ax
         mov ax, bx
         ret
 
-    imul bx, 10
-    add ax, bx
-    ret
+    .dez:
+        imul bx, 10
+        add ax, bx
+        ret
+        
+print_str:
+    lodsb ; carrega uma letra em si
+    cmp al, 0
+    je .done
+
+    mov ah, 0eh
+    mov bh, 0
+    mov bl, dl
+    int 10h
+    jmp print_str
+
+    .done:
+        ret
 
 done:
     jmp $
