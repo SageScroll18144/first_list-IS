@@ -30,7 +30,7 @@ _start:
 	jmp done
 	
 getinput:
-    ;30-03-1982
+    xor ax, ax
     mov ah, 0x00
     int 16h
 
