@@ -75,8 +75,8 @@ solve:
     div cx
     
     xor cx, cx
-    add cx, al 
-    add cx, ah 
+    ;add cl, al 
+    add cl, ah 
 
     jmp solve
     
