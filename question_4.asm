@@ -30,7 +30,6 @@ _start:
 	jmp done
 	
 getinput:
-    xor ax, ax
     mov ah, 0x00
     int 16h
 
@@ -67,7 +66,7 @@ endl:
     ret
 
 solve:
-    cmp ax, 10 ;68 14
+    cmp ax, 10 
     jb .min_nine
     
     inc dx
@@ -77,8 +76,8 @@ solve:
     
     .min_nine:
         add ax, dx
-        cmp ax, 9
         xor dx, dx
+        cmp ax, 9
         ja solve
         ret 
 
