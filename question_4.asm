@@ -1,5 +1,5 @@
 org 0x7c00
-jmp 0x0000:_start
+jmp _start
 
 _start:
 	xor ax, ax
@@ -7,19 +7,30 @@ _start:
    	xor dx, dx
 
     ;tela
-    
+    mov ah, 0x00
+    mov bh, 12h 
+    int 10h
+
+    mov ah, 0xb 
+    mov bh, 0
+    mov bl, 1h
+    int 10h
 
     call getinput
     call endl
 
     ;a gente tem a soma total em cx
-    call solve 
+    xor ax, ax
+    mov ax, cx
+    
+    call solve
+    add al, '0'
     call putchar
 
 	jmp done
 	
 getinput:
-    mov ah, 0x0
+    mov ah, 0x00
     int 16h
 
     cmp al, 0x0d
@@ -55,27 +66,21 @@ endl:
     ret
 
 solve:
-    
-    cmp cx, 10
+    cmp ax, 10 
     jb .min_nine
+    
+    inc dx
+    sub ax, 10
 
-    mov ax, cx
-    mov cx, 10
-
-    div cx
-
-    xor cx, cx
-    add cx, ax
-    add cx, dx
-
-    mov ax, cx
-    add ax, '0'
-
-    ret
-
+    jmp solve
+    
     .min_nine:
-        mov ax, cx
-        add ax, '0'
+        add ax, dx
+        xor dx, dx
+        
+        cmp ax, 9
+        ja solve
+
         ret 
 
 done:
@@ -83,3 +88,4 @@ done:
 
 times 510 - ($ - $$) db 0
 dw 0xaa55
+
