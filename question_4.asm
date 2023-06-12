@@ -20,6 +20,7 @@ _start:
     call endl
 
     ;a gente tem a soma total em cx
+    xor ax, ax
     call solve
     call putchar
 
@@ -38,13 +39,13 @@ getinput:
     sub ax, '0'
     add cx, ax
     add ax, '0'
-    ret
 
     call putchar
 
     jmp getinput
 
     .continue:
+        call putchar
         jmp getinput
     .done:
         ret
@@ -62,24 +63,21 @@ endl:
     ret
 
 solve:
+    mov ax, cx ;68
     
-    cmp cx, 10
+    cmp ax, 10
     jb .min_nine
 
-    mov ax, cx
     mov cx, 10
-
-    div cx
-
-    xor cl, cl
+    div cx ;ax = ax/cx al quociente e ah resto
+    
+    xor cx, cx
     add cl, al
-    add cl, ah
+    add cl, ah 
 
-    mov ax, cx
-
-    ret
+    jmp solve
+    
     .min_nine:
-        mov ax, cx
         ret 
 
 done:
