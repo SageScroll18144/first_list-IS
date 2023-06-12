@@ -85,7 +85,20 @@ solve:
         ret 
         
 print_cx:
+    sub ax, '0'
+    mov ax, cx
+    cmp ax, 9
+    jbe .print
+    inc dx
+    sub ax, 10
+    jmp print_cx
     
+    .print:
+        call putchar
+        mov ax, dx
+        call putchar
+        call endl
+        ret
     
 done:
     jmp $
