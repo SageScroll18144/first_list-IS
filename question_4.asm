@@ -18,7 +18,6 @@ _start:
 
     call getinput
     call endl
-    call endl
 
     ;a gente tem a soma total em cx
     xor ax, ax
