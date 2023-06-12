@@ -1,6 +1,8 @@
 org 0x7c00
 jmp _start
 
+;30-09-1982
+
 _start:
 	xor ax, ax
     xor cx, cx
@@ -18,16 +20,14 @@ _start:
 
     call getinput
     call endl
-    xor ax, ax
-    call print_cx
 
     ;a gente tem a soma total em cx
-    ;xor ax, ax
-    ;mov ax, cx
+    xor ax, ax
+    mov ax, cx
     
-    ;call solve
-    ;add al, '0'
-    ;call putchar
+    call solve
+    add al, '0'
+    call putchar
 
 	jmp done
 	
@@ -67,7 +67,7 @@ endl:
     call putchar
     ret
 
-solve: 
+solve:
     cmp ax, 10 
     jb .min_nine
     
@@ -84,22 +84,7 @@ solve:
         ja solve
 
         ret 
-        
-print_cx:
-    mov ax, cx
-    cmp ax, 9
-    jbe .print
-    inc dx
-    sub ax, 10
-    jmp print_cx
-    
-    .print:
-        call putchar
-        mov ax, dx
-        call putchar
-        call endl
-        ret
-    
+
 done:
     jmp $
 
