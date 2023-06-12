@@ -21,7 +21,9 @@ _start:
 
     ;a gente tem a soma total em cx
     xor ax, ax
+    xor bx, bx
     mov ax, cx
+    
     call solve
     add al, '0'
     call putchar
@@ -74,10 +76,12 @@ solve:
     jmp solve
     
     .min_nine:
-        add ax, dx
+        add bx, dx
         xor dx, dx
         cmp ax, 9
         ja solve
+        xor ax, ax
+        mov ax, bx
         ret 
 
 done:
