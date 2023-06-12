@@ -18,14 +18,15 @@ _start:
 
     call getinput
     call endl
+    call print_cx
 
     ;a gente tem a soma total em cx
     xor ax, ax
     mov ax, cx
     
-    call solve
-    add al, '0'
-    call putchar
+    ;call solve
+    ;add al, '0'
+    ;call putchar
 
 	jmp done
 	
@@ -51,7 +52,6 @@ getinput:
         call putchar
         jmp getinput
     .done:
-        call print_cx
         ret
 
 putchar:
