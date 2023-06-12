@@ -20,6 +20,8 @@ _start:
     call endl
 
     ;a gente tem a soma total em cx
+    xor ax, ax
+    mov ax, cx
     call solve
     add al, '0'
     call putchar
@@ -64,23 +66,19 @@ endl:
     ret
 
 solve:
-    xor ax, ax
-    mov ax, cx 
-    
-    cmp ax, 10
+    cmp ax, 10 ;68 14
     jb .min_nine
-
-    xor cx, cx
-    mov cx, 10
-    div cx
     
-    xor cx, cx
-    ;add cl, al 
-    add cl, ah 
+    inc dx
+    sub ax, 10
 
     jmp solve
     
     .min_nine:
+        add ax, dx
+        cmp ax, 9
+        xor dx, dx
+        ja solve
         ret 
 
 done:
