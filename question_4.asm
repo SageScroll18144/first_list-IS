@@ -69,6 +69,7 @@ solve:
     cmp ax, 10
     jb .min_nine
 
+    xor cx, cx
     mov cx, 10
     div cx ;ax = ax/cx al quociente e ah resto
     
