@@ -1,5 +1,5 @@
 org 0x7c00
-jmp 0x0000:_start
+jmp _start
 
 _start:
 	xor ax, ax
@@ -22,6 +22,7 @@ _start:
     ;a gente tem a soma total em cx
     xor ax, ax
     call solve
+    add al, '0'
     call putchar
 
 	jmp done
