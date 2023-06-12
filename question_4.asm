@@ -18,11 +18,12 @@ _start:
 
     call getinput
     call endl
+    xor ax, ax
     call print_cx
 
     ;a gente tem a soma total em cx
-    xor ax, ax
-    mov ax, cx
+    ;xor ax, ax
+    ;mov ax, cx
     
     ;call solve
     ;add al, '0'
@@ -85,7 +86,6 @@ solve:
         ret 
         
 print_cx:
-    xor ax, ax
     mov ax, cx
     cmp ax, 9
     jbe .print
