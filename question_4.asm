@@ -1,8 +1,6 @@
 org 0x7c00
 jmp _start
 
-;30-09-1982
-
 _start:
 	xor ax, ax
     xor cx, cx
