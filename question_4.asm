@@ -24,7 +24,7 @@ _start:
     mov ax, cx
     
     call solve
-    add al, '0'
+    add ax, '0'
     call putchar
 
 	jmp done
@@ -51,6 +51,7 @@ getinput:
         call putchar
         jmp getinput
     .done:
+        call print_cx
         ret
 
 putchar:
@@ -65,7 +66,7 @@ endl:
     call putchar
     ret
 
-solve:
+solve:   ;30-09-1982
     cmp ax, 10 
     jb .min_nine
     
@@ -82,7 +83,10 @@ solve:
         ja solve
 
         ret 
-
+        
+print_cx:
+    
+    
 done:
     jmp $
 
