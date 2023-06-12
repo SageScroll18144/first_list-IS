@@ -24,7 +24,7 @@ _start:
     mov ax, cx
     
     call solve
-    add ax, '0'
+    add al, '0'
     call putchar
 
 	jmp done
