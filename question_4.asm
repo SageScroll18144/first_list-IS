@@ -41,9 +41,9 @@ getinput:
     cmp al, '-'
     je .continue
 
-    sub ax, '0'
-    add cx, ax
-    add ax, '0'
+    sub al, '0'
+    add cl, al
+    add al, '0'
 
     call putchar
 
