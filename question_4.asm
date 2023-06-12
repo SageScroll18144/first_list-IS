@@ -7,11 +7,11 @@ _start:
    	xor dx, dx
 
     ;tela
-    mov ah, 0
-    mov bh, 12h
+    mov ah, 0x00
+    mov bh, 12h 
     int 10h
 
-    mov ah, 0xb
+    mov ah, 0xb 
     mov bh, 0
     mov bl, 1h
     int 10h
@@ -20,7 +20,6 @@ _start:
     call endl
 
     ;a gente tem a soma total em cx
-    xor ax, ax
     call solve
     add al, '0'
     call putchar
@@ -28,7 +27,8 @@ _start:
 	jmp done
 	
 getinput:
-    mov ah, 0x0
+    ;30-03-1982
+    mov ah, 0x00
     int 16h
 
     cmp al, 0x0d
@@ -64,14 +64,15 @@ endl:
     ret
 
 solve:
-    mov ax, cx ;68
+    xor ax, ax
+    mov ax, cx 
     
     cmp ax, 10
     jb .min_nine
 
     xor cx, cx
     mov cx, 10
-    div cx ;ax = ax/cx al quociente e ah resto
+    div cx
     
     xor cx, cx
     add cl, al
