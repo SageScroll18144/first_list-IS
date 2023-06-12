@@ -66,7 +66,7 @@ endl:
     call putchar
     ret
 
-solve:   ;30-09-1982
+solve: 
     cmp ax, 10 
     jb .min_nine
     
