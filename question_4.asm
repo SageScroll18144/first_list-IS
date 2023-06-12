@@ -85,7 +85,7 @@ solve:
         ret 
         
 print_cx:
-    sub ax, '0'
+    xor ax, ax
     mov ax, cx
     cmp ax, 9
     jbe .print
