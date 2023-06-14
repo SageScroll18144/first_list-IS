@@ -12,11 +12,14 @@ _start:
 
     call solve
     
-    xor cx, cx
+    xor si, si
     xor bx, bx
-    mov bx, 1
-    push bx
-    push bx
+    mov bx, ax
+    
+    xor cx, cx
+    xor ax, ax
+    mov ax, 1
+    mov dx, 1
     call fib
 
     jmp done
@@ -59,10 +62,10 @@ solve:
     lodsb
     mov bx, ax
 
-    lodsb
-
     cmp cx, 2
     jne .not_dez
+    
+    lodsb
 
     cmp cx, 2
     je .dez
@@ -80,43 +83,54 @@ solve:
 fib:
     inc cl
     
-    cmp cl, al
-    je .endfib
+    cmp cl, bl
+    je .prep
     
-    pop dx
+    xor si, si
+    mov si, ax
     
-    pop bx
+    add ax, dx 
     
-    add dx, bx
-    
-    push dx
-    
-    push bx
+    mov dx, si
     
     jmp fib
     
-    .endfib:
+    .prep:
         xor ax, ax
-        mov ax, bx
+        mov ax, dx
         jmp .mod11
     
-    .mod11:
-        cmp ax, 11
-        jb .done
-        
-        sub ax, 11
-        jmp .mod11
-        
-        .done:
-            add ax, '0'
-            call putchar
-            ret
+        .mod11:
+            cmp ax, 10
+            jb .done
+            
+            cmp ax, 10
+            je .dez
+            
+            sub ax, 11
+            jmp .mod11
+            
+            .dez:
+                xor ax, ax
+                mov ax, '1'
+                call putchar
+                mov ax, '0'
+                call putchar
+                ret
+                
+                .done:
+                    add ax, '0'
+                    call putchar
+                    ret
     
 done:
     jmp $
     
 times 510 - ($ - $$) db 0
 dw 0xaa55
+
+
+
 
 
 
